@@ -9,18 +9,16 @@ import SwiftUI
 import PhotosUI
 
 struct ContentView: View {
-    @State private var selectedItem: PhotosPickerItem? = nil
-    @State private var selectedImageData: Data? = nil
+    @State private var image = UIImage()
+    @State private var showSheet = false
 
     var body: some View {
         ZStack {
-            if let selectedImageData, let uiImage = UIImage(data: selectedImageData) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .edgesIgnoringSafeArea(.all)
-            }
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .edgesIgnoringSafeArea(.all)
             VStack {
                 Text("(Results go here)")
                     .padding(10)
@@ -29,19 +27,8 @@ struct ContentView: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    PhotosPicker(
-                        selection: $selectedItem,
-                        matching: .images,
-                        photoLibrary: .shared()
-                    ) {
+                    Button(action: {showSheet = true}) {
                         Image("picture")
-                    }
-                    .onChange(of: selectedItem) { newItem in
-                        Task {
-                            if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                                selectedImageData = data
-                            }
-                        }
                     }
                     Spacer()
                     Button(action: {}) {
@@ -50,6 +37,9 @@ struct ContentView: View {
                     Spacer()
                 }
                 .padding(.bottom, 20)
+            }
+            .sheet(isPresented: $showSheet) {
+                ImagePicker(selectedImage: self.$image)
             }
         }
         .background(Color.black.opacity(0.3))
