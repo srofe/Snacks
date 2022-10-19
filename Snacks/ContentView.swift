@@ -11,6 +11,7 @@ import PhotosUI
 struct ContentView: View {
     @State private var image = UIImage()
     @State private var showSheet = false
+    @State private var imageSourceType: UIImagePickerController.SourceType = .photoLibrary
 
     var body: some View {
         ZStack {
@@ -27,11 +28,17 @@ struct ContentView: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    Button(action: {showSheet = true}) {
+                    Button(action: {
+                        imageSourceType = .photoLibrary
+                        showSheet = true
+                    }) {
                         Image("picture")
                     }
                     Spacer()
-                    Button(action: {}) {
+                    Button(action: {
+                        imageSourceType = .camera
+                        showSheet = true
+                    }) {
                         Image("camera")
                     }
                     Spacer()
@@ -39,7 +46,7 @@ struct ContentView: View {
                 .padding(.bottom, 20)
             }
             .sheet(isPresented: $showSheet) {
-                ImagePicker(selectedImage: self.$image)
+                ImagePicker(sourceType: imageSourceType, selectedImage: self.$image)
             }
         }
         .background(Color.black.opacity(0.3))
