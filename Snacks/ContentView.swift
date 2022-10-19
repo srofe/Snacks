@@ -20,12 +20,6 @@ struct ContentView: View {
                     .scaledToFit()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .edgesIgnoringSafeArea(.all)
-                    .background(Color.black.opacity(0.3))
-            } else {
-                Image("")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .edgesIgnoringSafeArea(.all)
-                    .background(Color.black.opacity(0.3))
             }
             VStack {
                 Text("(Results go here)")
@@ -58,6 +52,7 @@ struct ContentView: View {
                 .padding(.bottom, 20)
             }
         }
+        .background(Color.black.opacity(0.3))
     }
 }
 
