@@ -29,15 +29,13 @@ struct ContentView: View {
                 HStack {
                     Spacer()
                     Button(action: {
-                        imageSourceType = .photoLibrary
-                        showSheet = true
+                        showImagePicker(imageSourceType: .photoLibrary)
                     }) {
                         Image("picture")
                     }
                     Spacer()
                     Button(action: {
-                        imageSourceType = .camera
-                        showSheet = true
+                        showImagePicker(imageSourceType: .camera)
                     }) {
                         Image("camera")
                     }
@@ -49,7 +47,12 @@ struct ContentView: View {
                 ImagePicker(sourceType: imageSourceType, selectedImage: self.$image)
             }
         }
-        .background(Color.black.opacity(0.3))
+        .background(Color.black.opacity(1))
+    }
+
+    private func showImagePicker(imageSourceType: UIImagePickerController.SourceType) {
+        self.imageSourceType = imageSourceType
+        self.showSheet = true
     }
 }
 
