@@ -48,6 +48,9 @@ struct ContentView: View {
             }
         }
         .background(Color.black.opacity(1))
+        .onChange(of: image) { _ in
+            print("New Image")
+        }
     }
 
     private func showImagePicker(imageSourceType: UIImagePickerController.SourceType) {
